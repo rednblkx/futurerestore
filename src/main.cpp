@@ -422,7 +422,7 @@ int main_r(int argc, const char * argv[]) {
             if (flags & FLAG_LATEST_SEP) {
                 info("User specified to use latest signed SEP\n");
                 client.downloadLatestSep();
-            } else if (!client.is32bit() && manual) {
+            } else if (!client.is32bit()) {
                 client.setSepPath(sepPath);
                 client.setSepManifestPath(sepManifestPath);
                 client.loadSep(sepPath);
