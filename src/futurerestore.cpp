@@ -2668,33 +2668,33 @@ void futurerestore::downloadLatestCryptex1() {
 }
 
 void futurerestore::downloadLatestFirmwareComponents() {
-    info("Downloading the latest firmware components...\n");
-    char *manifeststr = getLatestManifest();
-    if (elemExists("Rap,RTKitOS", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestRose();
-    if (elemExists("SE,UpdatePayload", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestSE();
-    if (elemExists("Savage,B0-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
-        elemExists("Savage,B0-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
-        elemExists("Savage,B2-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
-        elemExists("Savage,B2-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
-        elemExists("Savage,BA-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
-        elemExists("Savage,BA-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0)) {
-        downloadLatestSavage();
-    }
-    if (elemExists("BMU,DigestMap", manifeststr, getDeviceBoardNoCopy(), 0) ||
-        elemExists("BMU,FirmwareMap", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestVeridian();
-    if (elemExists("Timer,RestoreRTKitOS", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestTimer();
-    if (elemExists("Baobab,TCON", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestBaobab();
-    if (elemExists("Yonkers,PatchEpoch", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestYonkers();
-    const char *disableLatest = std::getenv("IDR_DISABLE_LATEST_CRYPTEX");
-    if(!disableLatest && elemExists("Cryptex1,SystemOS", manifeststr, getDeviceBoardNoCopy(), 0))
-        downloadLatestCryptex1();
-    info("Finished downloading the latest firmware components!\n");
+    info("Downloading the latest firmware components...?\n");
+    // char *manifeststr = getLatestManifest();
+    // if (elemExists("Rap,RTKitOS", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestRose();
+    // if (elemExists("SE,UpdatePayload", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestSE();
+    // if (elemExists("Savage,B0-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
+    //     elemExists("Savage,B0-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
+    //     elemExists("Savage,B2-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
+    //     elemExists("Savage,B2-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
+    //     elemExists("Savage,BA-Prod-Patch", manifeststr, getDeviceBoardNoCopy(), 0) &&
+    //     elemExists("Savage,BA-Dev-Patch", manifeststr, getDeviceBoardNoCopy(), 0)) {
+    //     downloadLatestSavage();
+    // }
+    // if (elemExists("BMU,DigestMap", manifeststr, getDeviceBoardNoCopy(), 0) ||
+    //     elemExists("BMU,FirmwareMap", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestVeridian();
+    // if (elemExists("Timer,RestoreRTKitOS", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestTimer();
+    // if (elemExists("Baobab,TCON", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestBaobab();
+    // if (elemExists("Yonkers,PatchEpoch", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestYonkers();
+    // const char *disableLatest = std::getenv("IDR_DISABLE_LATEST_CRYPTEX");
+    // if(!disableLatest && elemExists("Cryptex1,SystemOS", manifeststr, getDeviceBoardNoCopy(), 0))
+    //     downloadLatestCryptex1();
+    // info("Finished downloading the latest firmware components!\n");
 }
 
 void futurerestore::downloadLatestBaseband() {
