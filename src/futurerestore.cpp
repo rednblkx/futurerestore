@@ -1343,7 +1343,7 @@ void futurerestore::doRestore(const char *ipsw) {
           bootargs.append("nand-enable-reformat=0x1 ");
         }
         bootargs.append(
-            "-v -restore debug=0x2014e keepsyms=0x1 amfi=0xff amfi_allow_any_signature=0x1 amfi_get_out_of_my_way=0x1 cs_enforcement_disable=0x1");
+            "-restore debug=0x2014e keepsyms=0x1 amfi=0xff amfi_allow_any_signature=0x1 amfi_get_out_of_my_way=0x1 cs_enforcement_disable=0x1");
       }
       auto custom_seed = std::getenv("FUTURERESTORE_CUSTOM_CRYPTEX_SEED");
       if(_client->build_major > 19) {
