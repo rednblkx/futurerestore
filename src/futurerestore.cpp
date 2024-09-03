@@ -737,7 +737,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
         retassure(err == IRECV_E_SUCCESS, "ERROR: Unable to send %s component: %s\n", "iBSS", irecv_strerror(err));
 
         info("Booting iBSS, waiting for device to disconnect...\n");
-        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
 
         retassure(((_client->mode == MODE_UNKNOWN) || (mutex_unlock(&_client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBSS. Reset device and try again");
@@ -746,7 +746,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
     bool dfu = false;
     if ((_client->device->chip_id >= 0x7000 && _client->device->chip_id <= 0x8004) ||
         (_client->device->chip_id >= 0x8900 && _client->device->chip_id <= 0x8965)) {
-        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
         retassure(((_client->mode == MODE_DFU) || (mutex_unlock(&_client->device_event_mutex), 0)),
                   "Device did not reconnect. Possibly invalid iBSS. Reset device and try again");
         if (_client->build_major > 8) {
@@ -763,7 +763,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
             retassure(err == IRECV_E_SUCCESS, "ERROR: Unable to send %s component: %s\n", "iBEC", irecv_strerror(err));
 
             info("Booting iBEC, waiting for device to disconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
 
 #if __aarch64__
             retassure(((_client->mode == MODE_UNKNOWN) || (mutex_unlock(&_client->device_event_mutex), 0)),
@@ -773,7 +773,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
                       "Device did not disconnect. Possibly invalid iBEC. Reset device and try again");
 #endif
             info("Booting iBEC, waiting for device to reconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
 #if __aarch64__
             retassure(((_client->mode == MODE_RECOVERY) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Device did not reconnect. Possibly invalid iBEC. If you're using a USB-C to Lightning cable, switch to USB-A to Lightning (see issue #67)");
@@ -790,7 +790,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
     } else if ((_client->device->chip_id >= 0x8006 && _client->device->chip_id <= 0x8030) ||
                (_client->device->chip_id >= 0x8101 && _client->device->chip_id <= 0x8301)) {
         dfu = true;
-        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+        cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
 #if __aarch64__
         retassure(((_client->mode == MODE_RECOVERY) || (mutex_unlock(&_client->device_event_mutex), 0)),
                   "Device did not reconnect. Possibly invalid iBSS. If you're using a USB-C to Lightning cable, switch to USB-A to Lightning (see issue #67)");
@@ -861,11 +861,11 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
             irecv_usb_control_transfer(_client->dfu->client, 0x21, 1, 0, 0, nullptr, 0, 5000);
 
             info("Booting iBEC, waiting for device to disconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
             retassure(((_client->mode == MODE_UNKNOWN) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Device did not disconnect. Possibly invalid iBEC. Reset device and try again");
             info("Booting iBEC, waiting for device to reconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
             retassure(((_client->mode == MODE_RECOVERY) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Device did not reconnect. Possibly invalid iBEC. Reset device and try again");
             mutex_unlock(&_client->device_event_mutex);
@@ -897,11 +897,11 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
             irecv_usb_control_transfer(_client->dfu->client, 0x21, 1, 0, 0, nullptr, 0, 5000);
 
             info("Booting iBEC, waiting for device to disconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
             retassure(((MODE_UNKNOWN) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Device did not disconnect. Possibly invalid iBEC. Reset device and try again");
             info("Booting iBEC, waiting for device to reconnect...\n");
-            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 10000);
+            cond_wait_timeout(&_client->device_event_cond, &_client->device_event_mutex, 35000);
             retassure(((MODE_RECOVERY) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Device did not reconnect. Possibly invalid iBEC. Reset device and try again");
             mutex_unlock(&_client->device_event_mutex);
@@ -1371,14 +1371,14 @@ void futurerestore::doRestore(const char *ipsw) {
         dfu_client_free(client);
 
         info("Booting iBSS, Waiting for device to disconnect...\n");
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 35000);
         retassure((client->mode == MODE_UNKNOWN || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBSS. Reset device and try again");
         mutex_unlock(&client->device_event_mutex);
 
         info("Booting iBSS, Waiting for device to reconnect...\n");
         mutex_lock(&_client->device_event_mutex);
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 35000);
         retassure((client->mode == MODE_DFU || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBSS. Reset device and try again");
         mutex_unlock(&client->device_event_mutex);
@@ -1396,14 +1396,14 @@ void futurerestore::doRestore(const char *ipsw) {
 
         info("Booting iBEC, Waiting for device to disconnect...\n");
         mutex_lock(&_client->device_event_mutex);
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 35000);
         retassure((client->mode == MODE_UNKNOWN || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBEC. Reset device and try again");
         mutex_unlock(&client->device_event_mutex);
 
         info("Booting iBEC, Waiting for device to reconnect...\n");
         mutex_lock(&_client->device_event_mutex);
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 35000);
         retassure((client->mode == MODE_RECOVERY || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not reconnect. Possibly invalid iBEC. Reset device and try again");
         mutex_unlock(&client->device_event_mutex);
@@ -1435,7 +1435,7 @@ void futurerestore::doRestore(const char *ipsw) {
 
         debug("Waiting for device to disconnect...\n");
         mutex_unlock(&client->device_event_mutex);
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 20000);
 #if __aarch64__
         retassure((client->mode == MODE_UNKNOWN || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBEC. If you're using a USB-C to Lightning cable, switch to USB-A to Lightning (see issue #67)");
@@ -1447,7 +1447,7 @@ void futurerestore::doRestore(const char *ipsw) {
 
         debug("Waiting for device to reconnect...\n");
         mutex_unlock(&client->device_event_mutex);
-        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 10000);
+        cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 30000);
 #if __aarch64__
         retassure((client->mode == MODE_RECOVERY || (mutex_unlock(&client->device_event_mutex), 0)),
                   "Device did not disconnect. Possibly invalid iBEC. If you're using a USB-C to Lightning cable, switch to USB-A to Lightning (see issue #67)");
