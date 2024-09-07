@@ -3,7 +3,7 @@ name: Futurerestore
 on:
   push:
     branches:
-      - main
+      - No_APNonce_check
   pull_request:
   workflow_dispatch:
   schedule:
