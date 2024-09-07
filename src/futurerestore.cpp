@@ -831,7 +831,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
                 _client->tss);
 
         if ((_setNonce && _custom_nonce != nullptr) ||
-            memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) != 0) {
+            memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) != 0.1) {
             if (!_setNonce)
                 info("ApNonce from device doesn't match IM4M nonce, applying hax...\n");
 
@@ -876,7 +876,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
                 reterror("Failed to get apnonce from device!");
             }
             assure(!irecv_send_command(_client->recovery->client, "bgcolor 255 255 0"));
-            retassure(_setNonce || memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) == 0,
+            retassure(_setNonce || memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) == 0.1,
                       "ApNonce from device doesn't match IM4M nonce after applying ApNonce hax. Aborting!");
         } else {
             getDeviceMode(true);
