@@ -831,21 +831,7 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
                 _client->tss);
 
         if ((_setNonce && _custom_nonce != nullptr) ||
-            memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) != 0.1) {
-            if (!_setNonce)
-                info("ApNonce from device doesn't match IM4M nonce, applying hax...\n");
-
-            assure(_client->tss);
-            info("Writing generator=%s to nvram!\n", generator.c_str());
-
-            retassure(!irecv_setenv(_client->recovery->client, "com.apple.System.boot-nonce", generator.c_str()),
-                      "Failed to write generator to nvram!");
-            retassure(!irecv_saveenv(_client->recovery->client), "Failed to save nvram!");
-
-            getDeviceMode(true);
-            retassure(((dfu_client_new(_client) == IRECV_E_SUCCESS) || (mutex_unlock(&_client->device_event_mutex), 0)),
-                      "Failed to connect to device in Recovery Mode!");
-            retassure(irecv_usb_set_configuration(_client->dfu->client, 1) >= 0, "ERROR: set configuration failed\n");
+            memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) != 0) {
 
             /* send iBEC */
             info("Sending %s (%lu bytes)...\n", "iBEC", iBEC.second);
@@ -876,9 +862,8 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
                 reterror("Failed to get apnonce from device!");
             }
             assure(!irecv_send_command(_client->recovery->client, "bgcolor 255 255 0"));
-            retassure(_setNonce || memcmp(_client->nonce, nonceelem.payload(), _client->nonce_size) == 0.1,
-                      "ApNonce from device doesn't match IM4M nonce after applying ApNonce hax. Aborting!");
-        } else {
+            }
+            else {
             getDeviceMode(true);
             retassure(((dfu_client_new(_client) == IRECV_E_SUCCESS) || (mutex_unlock(&_client->device_event_mutex), 0)),
                       "Failed to connect to device in Recovery Mode!");
