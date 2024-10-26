@@ -6,12 +6,6 @@ on:
       - main
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 1 1 *'
-    - cron: '0 0 1 4 *'
-    - cron: '0 0 30 6 *'
-    - cron: '0 0 28 9 *'
-    - cron: '0 0 27 12 *'
 
 jobs:
   macOS:
@@ -39,7 +33,7 @@ jobs:
         ${{ github.workspace }}/.github/workflows/mac-post.sh
     - name: Versioning
       id: Versioning
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: Versioning
         path: |
@@ -47,21 +41,21 @@ jobs:
           ${{ github.workspace }}/latest_build_num.txt
     - name: macOS RELEASE Archive
       id: macOS-RELEASE-Archive
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: futurerestore-macOS-RELEASE
         path: |
           ${{ github.workspace }}/futurerestore-macOS-*-RELEASE.tar.xz
     - name: macOS DEBUG Archive
       id: macOS-DEBUG-Archive
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: futurerestore-macOS-DEBUG
         path: |
           ${{ github.workspace }}/futurerestore-macOS-*-DEBUG.tar.xz
     - name: macOS ASAN Archive
       id: macOS-ASAN-Archive
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: futurerestore-macOS-ASAN
         path: |
