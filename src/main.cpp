@@ -57,6 +57,7 @@ static struct option longopts[] = {
         { "boot-args",                  required_argument,      nullptr, '9' },
         { "no-cache",                   no_argument,            nullptr, 'a' },
         { "skip-blob",                  no_argument,            nullptr, 'f' },
+        { "skip-patches",               no_argument,            nullptr, ''}
 #endif
         { nullptr, 0, nullptr, 0 }
 };
@@ -82,6 +83,7 @@ static struct option longopts[] = {
 #define FLAG_CUSTOM_LATEST_OTA      1 << 18
 #define FLAG_NO_RSEP_FR             1 << 19
 #define FLAG_IGNORE_BB_FAIL         1 << 20
+#define FLAG_SKIP_PATCHES           1 << 21
 
 bool manual = false;
 
@@ -292,6 +294,9 @@ int main_r(int argc, const char * argv[]) {
             case 'd': // long option: "debug"; can be called as short option
                 idevicerestore_debug = 1;
                 break;
+            case 'y': // long option: "skip-patches"; can be called as short option
+                flags |= FLAG_SKIP_PATCHES;
+                break;
             default:
                 cmd_help();
                 return -1;
@@ -417,6 +422,9 @@ int main_r(int argc, const char * argv[]) {
 
         if(flags & FLAG_SKIP_BLOB) {
             client.skipBlobValidation();
+        }
+        if(flags & FLAG_SKIP_PATCHES){
+            client.skipIBootPatches();
         }
         if(!(flags & FLAG_SET_NONCE)) {
             if (flags & FLAG_LATEST_SEP) {

@@ -692,12 +692,18 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
     if (!iBSS.first && !_noIBSS) {
         info("Patching iBSS\n");
         iBSS = getIPSWComponent(_client, build_identity, "iBSS");
-        iBSS = std::move(libipatcher::patchiBSS((char *) iBSS.first, iBSS.second, iBSSKeys));
+        if(!_noiBootPatches){
+            info("User specified is not to patch iBSS");
+            iBSS = std::move(libipatcher::patchiBSS((char *) iBSS.first, iBSS.second, iBSSKeys));
+        }
     }
     if (!iBEC.first) {
         info("Patching iBEC\n");
         iBEC = getIPSWComponent(_client, build_identity, "iBEC");
-        iBEC = std::move(libipatcher::patchiBEC((char *) iBEC.first, iBEC.second, iBECKeys, std::move(bootargs)));
+        if(!_noiBootPatches){
+            info("User specified is not to patch iBEC");
+            iBEC = std::move(libipatcher::patchiBEC((char *) iBEC.first, iBEC.second, iBECKeys, std::move(bootargs)));
+        }
     }
 
     if (_client->image4supported) {
