@@ -57,7 +57,7 @@ static struct option longopts[] = {
         { "boot-args",                  required_argument,      nullptr, '9' },
         { "no-cache",                   no_argument,            nullptr, 'a' },
         { "skip-blob",                  no_argument,            nullptr, 'f' },
-        { "skip-patches",               no_argument,            nullptr, ''}
+        { "skip-patches",               no_argument,            nullptr, 'y'}
 #endif
         { nullptr, 0, nullptr, 0 }
 };
@@ -134,6 +134,7 @@ void cmd_help(){
     }
     info("  -2, --no-baseband\t\t\tSkip checks and don't flash baseband\n");
     info("                   \t\t\tOnly use this for device without a baseband (eg. iPod touch or some Wi-Fi only iPads)\n\n");
+    info("  -y, --no-patches\t\t\tSkip patches for iBoot and iBEC (useful if using already patched images to avoid patching errors\n\n")
 }
 
 using namespace std;
