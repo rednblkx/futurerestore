@@ -63,6 +63,7 @@ class futurerestore {
     bool _serial = false;
     bool _noRestore = false;
     bool _noRSEP = false;
+    bool _noiBootPatches = false;
 
     char *_firmwareJson = nullptr;
     char *_betaFirmwareJson = nullptr;
@@ -187,6 +188,7 @@ public:
     void setBootArgs(const char *boot_args){_boot_args = boot_args;};
     void disableCache(){_noCache = true;};
     void skipBlobValidation(){_skipBlob = true;};
+    void skipIBootPatches(){_noiBootPatches = true;};
 
     bool is32bit() const;
 
