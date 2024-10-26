@@ -95,21 +95,21 @@ jobs:
           mv ${{ github.workspace }}/.github/workflows/futurerestore3.tar.xz ${{ github.workspace }}/.github/workflows/$(cat ${{ github.workspace }}/.github/workflows/name3.txt)
       - name: futurerestore Linux x86_64 RELEASE Archive
         id: futurerestore-Linux-x86_64-RELEASE-Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: futurerestore-Linux-x86_64-RELEASE
           path: |
             ${{ github.workspace }}/.github/workflows/futurerestore-Linux-x86_64*-RELEASE.tar.xz
       - name: futurerestore Linux x86_64 DEBUG Archive
         id: futurerestore-Linux-x86_64-DEBUG-Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: futurerestore-Linux-x86_64-DEBUG
           path: |
             ${{ github.workspace }}/.github/workflows/futurerestore-Linux-x86_64*-DEBUG.tar.xz
       - name: futurerestore Linux x86_64 ASAN Archive
         id: futurerestore-Linux-x86_64-ASAN-Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: futurerestore-Linux-x86_64-ASAN
           path: |
