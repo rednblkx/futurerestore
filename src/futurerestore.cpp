@@ -203,11 +203,6 @@ futurerestore::futurerestore(bool isUpdateInstall, bool isPwnDfu, bool noIBSS, b
     if (stat(futurerestoreTempPath.c_str(), &st) == -1) safe_mkdir(futurerestoreTempPath.c_str(), 0755);
 #endif
 
-// TODO: implement windows CI and enable update check
-#ifndef WIN32
-    this->checkForUpdates();
-#endif
-
     nocache = 1; //tsschecker nocache
     _foundnonce = -1;
     _useCustomLatest = false;
