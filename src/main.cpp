@@ -116,6 +116,7 @@ void cmd_help(){
     info("  -9, --boot-args\t\t\tSet custom restore boot-args(PROCEED WITH CAUTION)(requires use-pwndfu)\n");
     info("  -a, --no-cache\t\t\tDisable cached patched iBSS/iBEC(requires use-pwndfu)\n");
     info("  -f, --skip-blob\t\t\tSkip SHSH blob validation(PROCEED WITH CAUTION)(requires use-pwndfu)\n");
+    info("  --skip-patches\t\t\tSkip patches for iBoot and iBEC (useful if using already patched images to avoid patching errors\n");
 #endif
 
     info("\nOptions for SEP:\n");
@@ -134,7 +135,6 @@ void cmd_help(){
     }
     info("  -2, --no-baseband\t\t\tSkip checks and don't flash baseband\n");
     info("                   \t\t\tOnly use this for device without a baseband (eg. iPod touch or some Wi-Fi only iPads)\n\n");
-    info("  -y, --no-patches\t\t\tSkip patches for iBoot and iBEC (useful if using already patched images to avoid patching errors\n\n");
 }
 
 using namespace std;
@@ -295,7 +295,7 @@ int main_r(int argc, const char * argv[]) {
             case 'd': // long option: "debug"; can be called as short option
                 idevicerestore_debug = 1;
                 break;
-            case 'y': // long option: "skip-patches"; can be called as short option
+            case 'y': // long option: "skip-patches";
                 flags |= FLAG_SKIP_PATCHES;
                 break;
             default:
